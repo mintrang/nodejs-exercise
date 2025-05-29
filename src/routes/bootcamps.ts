@@ -1,10 +1,16 @@
-import { Router } from 'express'
-import { getBootcamps, createBootcamp } from '../controllers/bootcamps'
+import { Router, Request, Response } from 'express'
+import { getBootcamps, createBootcamp, deleteBootcamp, updateBootcamp, getBootcamp } from '../controllers/bootcamps'
 
-const router = Router()
+const router: Router = Router()
 
 router.route('/')
-.get(getBootcamps)
-.post(createBootcamp)
+  .get(getBootcamps)
+  .post(createBootcamp)
 
+
+router.route('/:id')
+  .get(getBootcamp)
+  .put(updateBootcamp)
+  .delete(deleteBootcamp)
+  
 export default router

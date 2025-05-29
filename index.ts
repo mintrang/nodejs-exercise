@@ -2,12 +2,22 @@ import express from 'express'
 import dotenv from 'dotenv'
 import cors from 'cors'
 import router from './src/routes/bootcamps'
+import morgan from 'morgan'
+import connectDB from './src/config/db'
 
 dotenv.config()
 
 const app = express()
-app.use(cors())
 
+// Middleware
+app.use(cors())
+app.use(express.json())
+app.use(morgan('dev'))
+
+// Connect to database
+connectDB()
+
+// Routes
 app.get('/', (req, res) => {
   res.send('test')
 })
