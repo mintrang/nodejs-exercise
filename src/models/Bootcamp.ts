@@ -1,4 +1,6 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
+import slugify from "slugify";
+
 const BootcampSchema = new mongoose.Schema({
   "name": {
     type: String,
@@ -28,7 +30,19 @@ const BootcampSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now
-  }
+  },
+  user: { type: Schema.Types.ObjectId, ref: 'User' }
 })
 
-export const Bootcamps = mongoose.model('Bootcamps', BootcampSchema)
+
+BootcampSchema.pre('save', function (next) {
+
+  this.slug = slugify(this.name, {
+    replacement: '-',  // replace spaces with replacement character, defaults to `-`
+    remove: undefined, // remove characters that match regex, defaults to `undefined`
+    lower: false,      // convert to lower case, defaults to `false`
+    trim: true         // trim leading and trailing replacement chars, defaults to `true`
+  })
+  next()
+})
+export const BootcampModel = mongoose.model('Bootcamp', BootcampSchema)
