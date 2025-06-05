@@ -1,3 +1,4 @@
+import { NextFunction } from "express";
 import mongoose from "mongoose";
 
 const UserSchema = new mongoose.Schema({
@@ -13,6 +14,12 @@ UserSchema.virtual('bootcamp', {
   foreignField: 'user',
 })
 
+UserSchema.pre('deleteOne', async function (next: NextFunction) {
+  await mongoose.model('Bootcamp').deleteMany({ user: this._id });
+  next();
+});
+
 UserSchema.set('toJSON', { virtuals: true });
 UserSchema.set('toObject', { virtuals: true });
+
 export const UserModel =  mongoose.model('User', UserSchema)

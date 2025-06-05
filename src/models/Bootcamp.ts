@@ -36,7 +36,6 @@ const BootcampSchema = new mongoose.Schema({
 
 
 BootcampSchema.pre('save', function (next) {
-
   this.slug = slugify(this.name, {
     replacement: '-',  // replace spaces with replacement character, defaults to `-`
     remove: undefined, // remove characters that match regex, defaults to `undefined`
@@ -45,4 +44,5 @@ BootcampSchema.pre('save', function (next) {
   })
   next()
 })
+
 export const BootcampModel = mongoose.model('Bootcamp', BootcampSchema)

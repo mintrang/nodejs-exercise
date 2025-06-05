@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { BootcampModel as Bootcamps } from '../models/Bootcamp';
-import { appHandler } from '../ultils/AppHandler';
-import { ErrorResponse } from '../ultils/ErrorResponse';
+import { appHandler } from '@/ultils/AppHandler';
+import { ErrorResponse } from '@/ultils/ErrorResponse';
 
 interface AppError extends Error {
   statusCode?: number;
@@ -13,7 +13,7 @@ interface AppError extends Error {
 export const getBootcamps = appHandler(async (req: Request, res: Response, next: NextFunction) => {
   const data = await Bootcamps.find().populate({
     path: 'user',
-    select: 'name email role'
+    select: '-password -name'
   })
   res.json({ success: true, data })
 });

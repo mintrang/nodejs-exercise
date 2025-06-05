@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { UserModel } from '../models/User';
-import { appHandler } from '../ultils/AppHandler';
+import { UserModel } from '@/models/User';
+import { appHandler } from '@/ultils/AppHandler';
 
 interface AppError extends Error {
   statusCode?: number;
@@ -57,16 +57,16 @@ export const updateUser = appHandler(async (req: Request, res: Response, next: N
 
 })
 
-export const deleteUser= appHandler(async (req: Request, res: Response, next: NextFunction) => {
+export const deleteUser = appHandler(async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
-    const bootcamp = await UserModel.findById(id).select('name phone')
-    if (!bootcamp) {
+    const user = await UserModel.findById(id)
+    if (!user) {
       const error = new Error('Không tìm thấy user') as AppError;
       error.statusCode = 404;
       return next(error);
     }
 
-    await UserModel.findByIdAndDelete(id)
+    await user.deleteOne()
     res.json({
       success: true,
       data: {}
