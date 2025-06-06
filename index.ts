@@ -1,13 +1,13 @@
-import express from 'express'
 import dotenv from 'dotenv'
+dotenv.config()
+
+import express from 'express'
 import cors from 'cors'
 import bootcamps from './src/routes/bootcamps'
 import users from './src/routes/users'
 import morgan from 'morgan'
 import connectDB from './src/config/db'
 import errorHandler from './src/middleware/error'
-
-dotenv.config()
 
 const app = express()
 

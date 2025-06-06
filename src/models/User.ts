@@ -1,3 +1,4 @@
+import { verify } from "crypto";
 import { NextFunction } from "express";
 import mongoose from "mongoose";
 
@@ -6,6 +7,7 @@ const UserSchema = new mongoose.Schema({
   "email": { type: String, required: true },
   "role": { type: String, enum: ['admin', 'user'] },
   "password": { type: String, required: true },
+  verify: {type: Boolean, default: false}
 })
 
 UserSchema.virtual('bootcamp', {

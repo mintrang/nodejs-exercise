@@ -2,6 +2,8 @@ import { Request, Response, NextFunction } from 'express';
 import { BootcampModel as Bootcamps } from '../models/Bootcamp';
 import { appHandler } from '@/ultils/AppHandler';
 import { ErrorResponse } from '@/ultils/ErrorResponse';
+import transporter from '@/ultils/sendEmail';
+import sendEmail from '@/ultils/sendEmail';
 
 interface AppError extends Error {
   statusCode?: number;
@@ -31,7 +33,7 @@ export const getBootcamp = appHandler(async (req: Request, res: Response, next: 
   const { id } = req.params;
   const bootcamp = await Bootcamps.findById(id).select('name phone')
   if (!bootcamp) {
-    next(new ErrorResponse('Không tìm thấy bootcamp', 404))
+    next(new ErrorResponse('Not foud', 404))
     return
   }
   res.json({
@@ -44,7 +46,7 @@ export const updateBootcamp = appHandler(async (req: Request, res: Response, nex
   const { id } = req.params;
   const bootcamp = await Bootcamps.findById(id)
   if (!bootcamp) {
-    next(new ErrorResponse('Không tìm thấy bootcamp', 404))
+    next(new ErrorResponse('Not foud', 404))
     return
   }
 
@@ -60,7 +62,7 @@ export const deleteBootcamp = appHandler(async (req: Request, res: Response, nex
   const { id } = req.params;
   const bootcamp = await Bootcamps.findById(id).select('name phone')
   if (!bootcamp) {
-    next(new ErrorResponse('Không tìm thấy bootcamp', 404))
+    next(new ErrorResponse('Not foud', 404))
     return
   }
 

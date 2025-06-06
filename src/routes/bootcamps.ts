@@ -1,18 +1,19 @@
 import { Router, Request, Response } from 'express'
 import { getBootcamps, createBootcamp, deleteBootcamp, updateBootcamp, getBootcamp } from '../controllers/bootcamps'
+import checkAuth from '@/middleware/auth'
 
 const router = Router()
 
 const roles = ['admin', 'user']
 
 router.route('/')
-  .get(getBootcamps)
-  .post(createBootcamp)
+  .get(checkAuth, getBootcamps)
+  .post(checkAuth, createBootcamp)
 
 
 router.route('/:id')
-  .get(getBootcamp)
-  .put(updateBootcamp)
-  .delete(deleteBootcamp)
+  .get(checkAuth, getBootcamp)
+  .put(checkAuth, updateBootcamp)
+  .delete(checkAuth, deleteBootcamp)
 
 export default router
